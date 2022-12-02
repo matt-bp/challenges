@@ -2,7 +2,7 @@
   "profiles": {
     "02": {
       "commandName": "Project",
-      "commandLineArgs": "-r C:\\Users\\MattBishop\\source\\challenges\\AdventOfCode\\2022\\02\\data\\small-input.txt"
+      "commandLineArgs": "-r C:\\Users\\MattBishop\\source\\challenges\\AdventOfCode\\2022\\02\\data\\input.txt"
     }
   }
 }
