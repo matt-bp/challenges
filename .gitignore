@@ -1,5 +1,6 @@
 .idea
 .DS_Store
+launchSettings.json
 
 CMakeLists.txt.user
 CMakeCache.txt

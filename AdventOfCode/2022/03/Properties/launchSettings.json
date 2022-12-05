@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "03": {
-      "commandName": "Project",
-      "commandLineArgs": "-r C:\\Users\\MattBishop\\source\\challenges\\AdventOfCode\\2022\\03\\data\\input.txt"
-    }
-  }
-}

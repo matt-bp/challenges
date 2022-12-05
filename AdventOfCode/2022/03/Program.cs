@@ -9,7 +9,7 @@ Parser.Default.ParseArguments<Options>(args)
 
 static void RunOptions(Options opts)
 {
-    //PartOne(opts);
+    PartOne(opts);
     PartTwo(opts);
 }
 
