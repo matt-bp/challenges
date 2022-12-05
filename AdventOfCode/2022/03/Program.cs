@@ -9,20 +9,16 @@ Parser.Default.ParseArguments<Options>(args)
 
 static void RunOptions(Options opts)
 {
+    //PartOne(opts);
+    PartTwo(opts);
+}
+
+static void PartOne(Options opts)
+{
     var exists = File.Exists(opts.InputFile) ? "Yes" : "Nope";
     Console.WriteLine("Does the files exist? {0}", exists);
 
     var lines = File.ReadAllLines(opts.InputFile);
-
-    foreach (var line in lines)
-    { 
-        var firstRucksack = line.Take(line.Length/2);
-        var secondRucksack = line.Skip(line.Length/2);
-
-        var duplicateItem = firstRucksack.Where(c => secondRucksack.Contains(c)).First();
-
-        var priority = ConvertItemToPriority(duplicateItem);
-    }
 
     var sumPriority = (from line in lines
                        let firstRucksack = line.Take(line.Length / 2)
@@ -33,6 +29,22 @@ static void RunOptions(Options opts)
                        ).Sum();
 
     Console.WriteLine("Sum or priorities is: {0}", sumPriority);
+}
+
+static void PartTwo(Options opts)
+{
+    var lines = File.ReadAllLines(opts.InputFile);
+
+    var sumGroupPriorities = (from elfGroup in lines.Chunk(3)
+                              let firstElf = elfGroup[0]
+                              let secondElf = elfGroup[1]
+                              let thirdElf = elfGroup[2]
+                              let duplicateItem = thirdElf.Where(c3 => firstElf.Where(c1 => secondElf.Contains(c1)).Contains(c3)).First()
+                              let priority = ConvertItemToPriority(duplicateItem)
+                              select priority
+                              ).Sum();
+
+    Console.WriteLine("Sum or group priorities is: {0}", sumGroupPriorities);
 }
 
 static int ConvertItemToPriority(char duplicateItem)
