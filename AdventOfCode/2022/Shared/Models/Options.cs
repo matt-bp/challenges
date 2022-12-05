@@ -1,6 +1,6 @@
 using CommandLine;
 
-namespace _00.Models;
+namespace Shared.Models;
 
 public class Options
 {

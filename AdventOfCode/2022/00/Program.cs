@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using _00;
-using _00.Models;
+using _00.Parts;
+using Shared.Models;
 using System.Linq;
 
 Parser.Default.ParseArguments<Options>(args)
@@ -16,18 +17,8 @@ static void RunOptions(Options opts)
         return;
     }
 
-    PartOne(opts);
-    //PartTwo(opts);
-}
-
-static void PartOne(Options opts)
-{
-    Console.WriteLine("===== PART ONE =====");
-}
-
-static void PartTwo(Options opts)
-{
-    Console.WriteLine("===== PART TWO =====");
+    PartOne.Run();
+    PartTwo.Run();
 }
 
 static void HandleParseError(IEnumerable<Error> errs)

@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using _04;
 using _04.Parts;
-using _04.Models;
+using Shared.Models;
 using System.Linq;
 
 Parser.Default.ParseArguments<Options>(args)
