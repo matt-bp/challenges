@@ -81,14 +81,14 @@ public class Crane
 {
     public void ApplyMove(CrateStacks stacks, Move move)
     {
-        var currentStack = stacks[move.Source];
+        var currentStack = stacks[move.Source - 1];
 
         var itemsToMove = currentStack.TakeLast(move.Count).ToList();
-        itemsToMove.Reverse();
+        //itemsToMove.Reverse(); // Un-comment this to get part one's answer
         
         currentStack.RemoveRange(currentStack.Count - move.Count, move.Count);
         
-        stacks[move.Destination].AddRange(itemsToMove);
+        stacks[move.Destination - 1].AddRange(itemsToMove);
     }
 
     public string GetTopCrates(CrateStacks stacks)
@@ -97,10 +97,7 @@ public class Crane
 
         foreach (var stack in stacks)
         {
-            if (stacks.Any())
-            {
-                sb.Append(stack.First());
-            }
+            sb.Append(stack.LastOrDefault());
         }
 
         return sb.ToString();

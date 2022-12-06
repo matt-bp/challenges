@@ -11,7 +11,7 @@ public class CraneTests
         stacks[0].Add("Z");
         var crane = new Crane();
         
-        crane.ApplyMove(stacks, new Move { Count = 1, Source = 0, Destination = 1});
+        crane.ApplyMove(stacks, new Move { Count = 1, Source = 1, Destination = 2});
         
         Assert.Multiple(() =>
         {
@@ -29,7 +29,7 @@ public class CraneTests
         stacks[1].Add("X");
         var crane = new Crane();
         
-        crane.ApplyMove(stacks, new Move { Count = 2, Source = 0, Destination = 1});
+        crane.ApplyMove(stacks, new Move { Count = 2, Source = 1, Destination = 2});
         
         Assert.Multiple(() =>
         {
