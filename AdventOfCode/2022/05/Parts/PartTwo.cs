@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _00.Parts;
+namespace _05.Parts;
 
-public static class PartOne
+public static class PartTwo
 {
     public static void Run()
     {
-        Console.WriteLine("===== PART ONE =====");
+        Console.WriteLine("===== PART TWO =====");
     }
 }
