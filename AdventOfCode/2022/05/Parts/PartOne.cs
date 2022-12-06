@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace _05.Parts;
 
-using CrateStacks = List<List<int>>;
+using CrateStacks = List<List<string>>;
 
 public static class PartOne
 {
@@ -17,41 +17,49 @@ public static class PartOne
 
         var crates = Parser.GetInitialCrateConfiguration(input);
         var moves = Parser.GetMoves(input);
+        var crane = new Crane();
 
         moves.ForEach((move) =>
         {
-            Crane.ApplyMove(crates, move);
+            crane.ApplyMove(crates, move);
         });
 
-        var topCrates = Crane.GetTopCrates(crates);
+        var topCrates = crane.GetTopCrates(crates);
         Console.WriteLine("Crates at the top of the each stack are: {0}", topCrates);
     }
 }
 
 public static class Parser
 {
-    public static CrateStacks GetInitialCrateConfiguration(string[] lines)
+    public static CrateStacks GetInitialCrateConfiguration(IEnumerable<string> lines)
     {
         var gridLines = lines.Where(i => !i.StartsWith("move"));
-        var cleanedUp = gridLines.Reverse().Skip(2);
+        var cleanedUp = gridLines.Reverse().Skip(2).ToList();
 
+        var length = (cleanedUp.First().Length + 1) / 4;
+
+        var stacks = Crate.CreateStack(length);
+        
+        const string pattern = @"\[(\w)\] ?";
+        
         foreach(var input in cleanedUp)
         {
-            string pattern = @"\[(\w)\] ?";
             foreach (Match match in Regex.Matches(input, pattern, RegexOptions.IgnoreCase))
             {
-                Console.WriteLine(match);
+                var letterMatch = match.Groups[1];
+                
+                var goingTo = GetCrateIndexFromMatchIndex(letterMatch.Index);
+
+                stacks[goingTo].Add(letterMatch.Value);
             }
         }
-
-        var stacks = new CrateStacks();
-
-
-
+        
         return stacks;
     }
 
-    public static List<Move> GetMoves(string[] input) => (from line in input
+    private static int GetCrateIndexFromMatchIndex(int index) => (index - 1) / 4;
+
+    public static List<Move> GetMoves(IEnumerable<string> input) => (from line in input
                                                           where line.StartsWith("move")
                                                           let parts = line.Split(' ')
                                                           select new Move
@@ -71,25 +79,36 @@ public class Move
 
 public class Crane
 {
-    public static void ApplyMove(CrateStacks stacks, Move move)
+    public void ApplyMove(CrateStacks stacks, Move move)
     {
         var currentStack = stacks[move.Source];
 
         var itemsToMove = currentStack.TakeLast(move.Count).ToList();
         itemsToMove.Reverse();
-
+        
+        currentStack.RemoveRange(currentStack.Count - move.Count, move.Count);
+        
         stacks[move.Destination].AddRange(itemsToMove);
     }
 
-    public static string GetTopCrates(CrateStacks stacks)
+    public string GetTopCrates(CrateStacks stacks)
     {
         StringBuilder sb = new();
 
         foreach (var stack in stacks)
         {
-            sb.Append(stack.Last());
+            if (stacks.Any())
+            {
+                sb.Append(stack.First());
+            }
         }
 
         return sb.ToString();
     }
+}
+
+public static class Crate
+{
+    public static List<List<string>> CreateStack(int length) => Enumerable.Range(0, length)
+        .Select(x => new List<string>()).ToList();
 }
