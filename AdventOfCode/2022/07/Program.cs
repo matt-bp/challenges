@@ -17,7 +17,9 @@ static void RunOptions(Options opts)
         return;
     }
 
-    PartOne.Run();
+    var lines = File.ReadAllLines(opts.InputFile);
+
+    PartOne.Run(lines);
     PartTwo.Run();
 }
 

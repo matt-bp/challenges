@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _07.IO;
+namespace _07.Helpers;
 
 public class Parser
 {
@@ -42,14 +42,46 @@ public class Parser
 
             var directory = rest.First();
 
-            if (directory == "/" && _root == null)
+            if (directory == "/")
             {
-                _root = new Models.Directory
+                if (_root == null)
                 {
-                    Name = directory
-                };
+                    _root = new Models.Directory
+                    {
+                        Name = directory
+                    };
+                }
+
                 _currentDirectory = _root;
             }
+            
+            if (_root == null)
+            {
+                throw new InvalidOperationException("No root directory is set. Please make a call to $ cd /");
+            }
+
+            if (_currentDirectory == null)
+            {
+                throw new InvalidOperationException("No current directory is set.");
+            }
+
+            if (directory == "..")
+            {
+                _currentDirectory = _currentDirectory.Parent;
+            }
+
+            if (_currentDirectory.Children.Any(c => c.Name == directory))
+            {
+                _currentDirectory = _currentDirectory.Children.Where(c => c.Name == directory).First() as Models.Directory;
+            }
+        }
+        else if (command == "ls")
+        {
+            // do nothing for now
+        }
+        else
+        {
+            throw new ArgumentException($"{command} is not a recognized user command.");
         }
     }
 
