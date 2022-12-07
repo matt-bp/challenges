@@ -29,22 +29,18 @@ public static class DirectoryFinder
         return returnDirectories;
     }
 
-    public static List<IFileSystemItem> GetDirectoriesWithAtLeastSize(IFileSystemItem root, int atLeastSize)
+    public static List<IFileSystemItem> GetAllDirectories(IFileSystemItem root)
     {
         var returnDirectories = new List<IFileSystemItem>();
-        foreach (var fromChild in from child in ((Models.Directory)root).Children.Where(c => c is Models.Directory)
-                                  let fromChild = GetDirectoriesWithAtMostSize(child, atLeastSize)
-                                  select fromChild)
+
+        foreach (var children in from child in ((Models.Directory)root).Children.Where(c => c is Models.Directory)
+                                  let children = GetAllDirectories(child)
+                                  select children)
         {
-            returnDirectories.AddRange(fromChild);
+            returnDirectories.AddRange(children);
         }
 
-        var currentSize = root.GetSize();
-
-        if (currentSize >= atLeastSize)
-        {
-            returnDirectories = returnDirectories.Append(root).ToList();
-        }
+        returnDirectories = returnDirectories.Append(root).ToList();
 
         return returnDirectories;
     }

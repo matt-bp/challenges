@@ -11,9 +11,15 @@ public class Directory : IFileSystemItem
     public string Name { get; set; }
     public Directory Parent;
     public List<IFileSystemItem> Children { get; set; } = new();
+    private int? _size;
 
     public int GetSize()
     {
-        return Children.Sum(c => c.GetSize());
+        if (_size == null)
+        {
+            _size = Children.Sum(c => c.GetSize());
+        }
+
+        return _size.Value;
     }
 }

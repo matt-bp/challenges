@@ -18,11 +18,21 @@ public static class PartTwo
 
         var root = parser.GetFileSystemStructure(lines);
 
-        var size = 30000000;
-        var directories = DirectoryFinder.GetDirectoriesWithAtLeastSize(root, size);
+        var directories = DirectoryFinder.GetAllDirectories(root);
+        var totalAvailableSpace = 70_000_000;
+        var requiredUnusedSpace = 30_000_000;
 
-        var sumOfSizes = directories.Sum(d => d.GetSize());
+        var biggestToSmallest = directories.OrderByDescending(d => d.GetSize());
 
-        Console.WriteLine("The total sum of directories with at most size {0} is {1}", size, sumOfSizes);
+        var biggest = biggestToSmallest.First();
+
+        var requiredDeletedForUpdate = requiredUnusedSpace - (totalAvailableSpace - biggest.GetSize());
+
+        var directoryToDelete = biggestToSmallest.Skip(1)
+            .Where(d => d.GetSize() >= requiredDeletedForUpdate)
+            .OrderBy(d => d.GetSize())
+            .First();
+
+        Console.WriteLine("The directory to delete has a size of {0}", directoryToDelete.GetSize());
     }
 }

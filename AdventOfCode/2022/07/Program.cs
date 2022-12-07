@@ -20,7 +20,7 @@ static void RunOptions(Options opts)
     var lines = File.ReadAllLines(opts.InputFile);
 
     PartOne.Run(lines);
-    PartTwo.Run();
+    PartTwo.Run(lines);
 }
 
 static void HandleParseError(IEnumerable<Error> errs)
