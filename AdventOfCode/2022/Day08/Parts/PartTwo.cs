@@ -17,9 +17,9 @@ public static class PartTwo
         var grid = Parser.GetTreeHeightGridFromInput(lines);
 
         // For each cell, find if it's visible
-        var count = TreeHouseLocationFinder.CountOfVisibleTrees(grid);
+        var maxScore = ScenicTreeFinder.GetScenicScores(grid).Max();
 
         // Get count of visible cells
-        Console.WriteLine("The number of visible trees are {0}", count);
+        Console.WriteLine("Highest scenic score is {0}", maxScore);
     }
 }

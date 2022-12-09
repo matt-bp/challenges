@@ -9,13 +9,46 @@ public static class ScenicTreeFinder
             for (var col = 0; col < treeGrid[row].Count; col++)
             {
                 var currentHeight = treeGrid[row][col];
-                // if (IsVisibleGoingNorth(row, col, treeGrid, currentHeight) || IsVisibleGoingSouth(row, col, treeGrid, currentHeight) ||
-                //     IsVisibleGoingEast(row, col, treeGrid, currentHeight) || IsVisibleGoingWest(row, col, treeGrid, currentHeight))
 
-                yield return 1;
+                var scoreNorth = ViewingDistanceGoingNorth(row, col, treeGrid, currentHeight);
+                var scoreSouth = ViewingDistanceGoingSouth(row, col, treeGrid, currentHeight);
+                var scoreEast = ViewingDistanceGoingEast(row, col, treeGrid, currentHeight);
+                var scoreWest = ViewingDistanceGoingWest(row, col, treeGrid, currentHeight);
+
+                yield return scoreNorth * scoreSouth * scoreEast * scoreWest;
             }
         }
-        
-        // return Enumerable.Empty<int>();
+    }
+
+    public static int ViewingDistanceGoingNorth(int row, int col, List<List<int>> treeGrid, int originalHeight)
+    {
+        if (row == 0)
+            return 0;
+
+        return originalHeight > treeGrid[row - 1][col] ? 1 + ViewingDistanceGoingNorth(row - 1, col, treeGrid, originalHeight) : 1;        
+    }
+
+    public static int ViewingDistanceGoingSouth(int row, int col, List<List<int>> treeGrid, int originalHeight)
+    {
+        if (row == treeGrid.Count - 1) 
+            return 0;
+
+        return originalHeight > treeGrid[row + 1][col] ? 1 + ViewingDistanceGoingSouth(row + 1, col, treeGrid, originalHeight) : 1;
+    }
+
+    public static int ViewingDistanceGoingEast(int row, int col, List<List<int>> treeGrid, int originalHeight)
+    {
+        if (col == 0)
+            return 0;
+
+        return originalHeight > treeGrid[row][col - 1] ? 1 + ViewingDistanceGoingEast(row, col - 1, treeGrid, originalHeight) : 1;
+    }
+
+    public static int ViewingDistanceGoingWest(int row, int col, List<List<int>> treeGrid, int originalHeight)
+    {
+        if (col == treeGrid[0].Count - 1)
+            return 0;
+
+        return originalHeight > treeGrid[row][col + 1] ? 1 + ViewingDistanceGoingWest(row, col + 1, treeGrid, originalHeight) : 1;
     }
 }

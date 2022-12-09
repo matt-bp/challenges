@@ -23,10 +23,10 @@ public static class TreeHouseLocationFinder
                 {
                     count += 1;
                 }
-                else
-                {
-                    Console.WriteLine("Not visible from ({0}, {1})", row, col);
-                }
+                //else
+                //{
+                //    Console.WriteLine("Not visible from ({0}, {1})", row, col);
+                //}
             }
         }
 
