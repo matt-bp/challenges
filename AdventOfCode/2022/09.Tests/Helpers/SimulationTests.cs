@@ -16,13 +16,9 @@ namespace _09.Tests.Helpers
         public void Apply_OnStartingPosition_OnlyMovesHead()
         {
             var sim = new Simulation(new Vector2 { X = 0, Y = 0 });
-            var move = new Move 
-            { 
-                Direction = new Vector2 { X = 1, Y = 0 },
-                Count = 1,
-            };
+            var direction = new Vector2 { X = 1, Y = 0 };
 
-            sim.Apply(move);
+            sim.Apply(direction);
 
             Assert.Multiple(() =>
             {
@@ -35,13 +31,9 @@ namespace _09.Tests.Helpers
         public void Apply_WhenHeadIsRightOfTails_MovesTails()
         {
             var sim = new Simulation(new Vector2 { X = 1, Y = 0 }, new Vector2 { X = 0, Y = 0 });
-            var move = new Move
-            {
-                Direction = new Vector2 { X = 1, Y = 0 },
-                Count = 1,
-            };
+            var direction = new Vector2 { X = 1, Y = 0 };
 
-            sim.Apply(move);
+            sim.Apply(direction);
 
             Assert.Multiple(() =>
             {
@@ -54,13 +46,9 @@ namespace _09.Tests.Helpers
         public void Apply_WhenHeadIsLeftOfTails_MovesTails()
         {
             var sim = new Simulation(new Vector2 { X = -1, Y = 0 }, new Vector2 { X = 0, Y = 0 });
-            var move = new Move
-            {
-                Direction = new Vector2 { X = -1, Y = 0 },
-                Count = 1,
-            };
+            var direction = new Vector2 { X = -1, Y = 0 };
 
-            sim.Apply(move);
+            sim.Apply(direction);
 
             Assert.Multiple(() =>
             {
@@ -73,13 +61,9 @@ namespace _09.Tests.Helpers
         public void Apply_WhenHeadIsAboveTails_MovesTails()
         {
             var sim = new Simulation(new Vector2 { X = 0, Y = 1 }, new Vector2 { X = 0, Y = 0 });
-            var move = new Move
-            {
-                Direction = new Vector2 { X = 0, Y = 1 },
-                Count = 1,
-            };
+            var direction = new Vector2 { X = 0, Y = 1 };
 
-            sim.Apply(move);
+            sim.Apply(direction);
 
             Assert.Multiple(() =>
             {
@@ -92,13 +76,9 @@ namespace _09.Tests.Helpers
         public void Apply_WhenHeadIsBelowTails_MovesTails()
         {
             var sim = new Simulation(new Vector2 { X = 0, Y = -1 }, new Vector2 { X = 0, Y = 0 });
-            var move = new Move
-            {
-                Direction = new Vector2 { X = 0, Y = -1 },
-                Count = 1,
-            };
+            var direction = new Vector2 { X = 0, Y = -1 };
 
-            sim.Apply(move);
+            sim.Apply(direction);
 
             Assert.Multiple(() =>
             {
@@ -111,13 +91,9 @@ namespace _09.Tests.Helpers
         public void Apply_WhenHeadDiagonallyAboveTails_DontMoveTails()
         {
             var sim = new Simulation(headPosition: new Vector2 { X = 1, Y = 0 }, tailPosition: new Vector2 { X = 0, Y = 0 });
-            var move = new Move
-            {
-                Direction = new Vector2 { X = 0, Y = 1 },
-                Count = 1,
-            };
+            var direction = new Vector2 { X = 0, Y = 1 };
 
-            sim.Apply(move);
+            sim.Apply(direction);
 
             Assert.Multiple(() =>
             {
@@ -130,13 +106,9 @@ namespace _09.Tests.Helpers
         public void Apply_WhenHeadDiagonallyAboveAndMoves_MoveTails()
         {
             var sim = new Simulation(headPosition: new Vector2 { X = 1, Y = 1 }, tailPosition: new Vector2 { X = 0, Y = 0 });
-            var move = new Move
-            {
-                Direction = new Vector2 { X = 0, Y = 1 },
-                Count = 1,
-            };
+            var direction = new Vector2 { X = 0, Y = 1 };
 
-            sim.Apply(move);
+            sim.Apply(direction);
 
             Assert.Multiple(() =>
             {

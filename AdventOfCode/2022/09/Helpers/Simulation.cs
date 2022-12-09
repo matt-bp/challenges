@@ -25,13 +25,10 @@ public class Simulation
         TailPosition = tailPosition;
     }
 
-    public void Apply(Move move)
+    public void Apply(Vector2 direction)
     {
-        for (var i = 0; i < move.Count; i++)
-        {
-            MoveHead(move.Direction);
-            MoveTail();
-        }
+        MoveHead(direction);
+        MoveTail();   
     }
 
     public void MoveHead(Vector2 direction)

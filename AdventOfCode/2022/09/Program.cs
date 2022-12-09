@@ -17,6 +17,8 @@ static void RunOptions(Options opts)
         return;
     }
 
+    Console.WriteLine("--- Day 9: Rope Bridge ---");
+
     var lines = File.ReadAllLines(opts.InputFile);
 
     PartOne.Run(lines);
