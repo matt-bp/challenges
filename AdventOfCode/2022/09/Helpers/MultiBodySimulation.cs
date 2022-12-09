@@ -1,44 +1,43 @@
-﻿using _09.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using System.Numerics;
 
 namespace _09.Helpers;
 
-public class Simulation
+public class MultiBodySimulation
 {
-    public Vector2 HeadPosition { get; private set; }
-    public Vector2 TailPosition { get; private set; }
- 
-    public Simulation(Vector2 startingPositon)
-    {
-        HeadPosition = startingPositon;
-        TailPosition = startingPositon;
-    }
+    public List<Vector2> Body { get; private set; }
 
-    public Simulation(Vector2 headPosition, Vector2 tailPosition)
+    public MultiBodySimulation(Vector2 startingPositon, int bodyLength)
     {
-        HeadPosition = headPosition;
-        TailPosition = tailPosition;
+        Body = new List<Vector2>();
+        for (var i = 0; i < bodyLength + 1; i++)
+        {
+            Body.Add(new Vector2 { X = startingPositon.X, Y = startingPositon.Y });
+        }
     }
 
     public void Apply(Vector2 direction)
     {
         MoveHead(direction);
-        MoveTail();   
+
+        for(var i = 1; i < Body.Count; i++)
+        {
+            MoveTail(i);
+        }
     }
 
     private void MoveHead(Vector2 direction)
     {
-        HeadPosition += direction;
+        Body[0] += direction;
     }
 
-    private void MoveTail()
+    private void MoveTail(int index)
     {
-        var dirToHead = HeadPosition - TailPosition;
+        var dirToHead = Body[index - 1] - Body[index];
 
         if (dirToHead.Length() <= 1)
         {
@@ -47,7 +46,7 @@ public class Simulation
 
         if (dirToHead.X == 0 || dirToHead.Y == 0)
         {
-            TailPosition += Vector2.Normalize(dirToHead);
+            Body[index] += Vector2.Normalize(dirToHead);
             return;
         }
 
@@ -66,6 +65,7 @@ public class Simulation
             _ => Vector2.Zero
         };
 
-        TailPosition += diagDirection;
+        Body[index] += diagDirection;
     }
 }
+
