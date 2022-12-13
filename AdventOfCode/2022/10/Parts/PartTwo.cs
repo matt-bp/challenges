@@ -27,30 +27,30 @@ public static class PartTwo
 
         while (!cpu.DoneWithProgram)
         {
-            cpu.RunCycle();
-
+            // Start
+            // cpu.StartCycle();
+            
+            // Draw
             if (cpu.XRegister - 1 <= currentCol && currentCol <= cpu.XRegister + 1)
             {
                 renderBuffer.Pixels[currentRow][currentCol] = true;
             }
             
-            currentCycle++;
-            currentCol += 1;
-
+            // End
+            cpu.EndCycle();
+            
             if (currentCycle == cycleLineEnd)
             {
                 cycleLineEnd += renderBuffer.Width;
                 currentCol = 0;
                 currentRow += 1;
             }
+            else
+            {
+                currentCol += 1;
+            }
             
-            // Start
-            
-            // During
-            
-            // Draw
-            
-            // End
+            currentCycle++;
         }
 
         var screen = Renderer.RenderToString(renderBuffer);

@@ -19,7 +19,7 @@ static void RunOptions(Options opts)
 
     var lines = File.ReadAllLines(opts.InputFile);
 
-    PartOne.Run(lines);
+    // PartOne.Run(lines);
     PartTwo.Run(lines);
 }
 

@@ -17,23 +17,30 @@ public class Cpu
 
     public void RunCycle()
     {
+        // Start running current instruction
+        EndCycle();
+    }
+
+    public void EndCycle()
+    {
+        if (CurrentInstruction >= _instructions.Count)
+        {
+            DoneWithProgram = true;
+            return;
+        }
+        
         if (_instructions[CurrentInstruction].CyclesUntilExecution != 0)
         {
             _instructions[CurrentInstruction].CyclesUntilExecution -= 1;
             return;
         }
         
+        // Instruction finished execution
         if (_instructions[CurrentInstruction] is Add add)
         {
             XRegister += add.Value;
         }
 
         CurrentInstruction++;
-
-        if (CurrentInstruction >= _instructions.Count)
-        {
-            DoneWithProgram = true;
-            return;
-        }
     }
 }
