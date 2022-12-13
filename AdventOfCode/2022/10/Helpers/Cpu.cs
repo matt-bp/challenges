@@ -25,7 +25,6 @@ public class Cpu
         
         if (_instructions[CurrentInstruction] is Add add)
         {
-            Console.Write(add.Value < 0 ? add.Value.ToString() : $"+{add.Value.ToString()}");
             XRegister += add.Value;
         }
 
@@ -36,10 +35,5 @@ public class Cpu
             DoneWithProgram = true;
             return;
         }
-    }
-
-    public string GetState()
-    {
-        return DoneWithProgram ? "Done" : $"CI: {_instructions[CurrentInstruction]}, X: {XRegister}";
     }
 }

@@ -15,13 +15,7 @@ public static class PartOne
         Console.WriteLine("===== PART ONE =====");
 
         var instructions = Parser.GetInstructions(lines).ToList();
-
-        // Console.WriteLine("Instructions:");
-        // foreach(var instruction in instructions )
-        // {
-        //     Console.WriteLine("\t{0}", instruction);
-        // }
-
+        
         var cpu = new Cpu(instructions, 1);
 
         var currentCycle = 1; // Start at one, because we're on the "first" cycle.
@@ -30,20 +24,16 @@ public static class PartOne
 
         while (!cpu.DoneWithProgram)
         {
-            currentCycle++;
-            
             cpu.RunCycle();
+            
+            currentCycle++;
             
             if (currentCycle == checkAtCycle)
             {
                 checkAtCycle += 40;
                 sumAtCheck += currentCycle * cpu.XRegister;
-                Console.Write($" ({currentCycle})\n");
+                // Console.Write($" ({currentCycle})\n");
             }
-
-            // Console.WriteLine("Current Cycle State:");
-            // Console.WriteLine($"\t{currentCycle} cycles");
-            // Console.WriteLine($"\t{cpu.GetState()}");
         }
 
         Console.WriteLine("End");
