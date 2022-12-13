@@ -15,7 +15,7 @@ public class Cpu
         XRegister= initialXRegisterValue;
     }
 
-    public void NextCycle()
+    public void RunCycle()
     {
         if (_instructions[CurrentInstruction].CyclesUntilExecution != 0)
         {
@@ -25,6 +25,7 @@ public class Cpu
         
         if (_instructions[CurrentInstruction] is Add add)
         {
+            Console.Write(add.Value < 0 ? add.Value.ToString() : $"+{add.Value.ToString()}");
             XRegister += add.Value;
         }
 
@@ -39,6 +40,6 @@ public class Cpu
 
     public string GetState()
     {
-        return string.Format("CI: {0}, X: {1}", _instructions[CurrentInstruction], XRegister);
+        return DoneWithProgram ? "Done" : $"CI: {_instructions[CurrentInstruction]}, X: {XRegister}";
     }
 }

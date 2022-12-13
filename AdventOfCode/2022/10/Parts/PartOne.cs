@@ -16,36 +16,38 @@ public static class PartOne
 
         var instructions = Parser.GetInstructions(lines).ToList();
 
-        Console.WriteLine("Instructions:");
-        foreach(var instruction in instructions )
-        {
-            Console.WriteLine("\t{0}", instruction);
-        }
+        // Console.WriteLine("Instructions:");
+        // foreach(var instruction in instructions )
+        // {
+        //     Console.WriteLine("\t{0}", instruction);
+        // }
 
         var cpu = new Cpu(instructions, 1);
 
-        var numCycles = 0;
+        var currentCycle = 1; // Start at one, because we're on the "first" cycle.
         var checkAtCycle = 20;
         var sumAtCheck = 0;
 
         while (!cpu.DoneWithProgram)
         {
-            cpu.NextCycle();
-            numCycles++;
-
-            if (numCycles == checkAtCycle)
+            currentCycle++;
+            
+            cpu.RunCycle();
+            
+            if (currentCycle == checkAtCycle)
             {
                 checkAtCycle += 40;
-                sumAtCheck += numCycles * cpu.XRegister;
+                sumAtCheck += currentCycle * cpu.XRegister;
+                Console.Write($" ({currentCycle})\n");
             }
 
-            Console.WriteLine("Current Cycle State:");
-            Console.WriteLine($"\t{numCycles} cycles");
-            Console.WriteLine($"\t{cpu.GetState()}");
+            // Console.WriteLine("Current Cycle State:");
+            // Console.WriteLine($"\t{currentCycle} cycles");
+            // Console.WriteLine($"\t{cpu.GetState()}");
         }
 
         Console.WriteLine("End");
-        Console.WriteLine("Number of cycles: {0}", numCycles);
+        Console.WriteLine("Number of cycles: {0}", currentCycle);
         Console.WriteLine("Value in X Register: {0}", cpu.XRegister);
         Console.WriteLine("Sum: {0}", sumAtCheck);
     }
