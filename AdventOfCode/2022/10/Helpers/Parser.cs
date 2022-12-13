@@ -12,14 +12,14 @@ public class Parser
             {
                 yield return new Noop
                 {
-                    CyclesUntilExecution = 1
+                    CyclesUntilExecution = 0
                 };
             }
             else
             {                
                 yield return new Add
                 {
-                    CyclesUntilExecution = 2,
+                    CyclesUntilExecution = 1,
                     Value = int.Parse(line.Split(" ")[1])
                 };
                 
