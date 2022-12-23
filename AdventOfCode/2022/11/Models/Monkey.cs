@@ -17,7 +17,9 @@ namespace _11.Models
         {
             NumTimesInspected++;
 
-            var newWorryLevel = Operation(ItemWorryLevels[currentItem]);
+            var oldWorryLevel = ItemWorryLevels[currentItem];
+
+            var newWorryLevel = Operation(oldWorryLevel);
 
             ItemWorryLevels[currentItem] = newWorryLevel;
         }

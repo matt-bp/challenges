@@ -1,11 +1,12 @@
 ﻿using _11.Helpers;
+using _11.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _00.Parts;
+namespace _11.Parts;
 
 public static class PartOne
 {
@@ -14,10 +15,18 @@ public static class PartOne
         Console.WriteLine("===== PART ONE =====");
 
         // TODO: Create monkey list
-        var monkeys = Parser.GetMonkeys(lines);
+        var parser = new Parser();
+        var monkeys = parser.GetMonkeys(lines);
+
+        Console.WriteLine("Starting Items:");
+        foreach (var monkey in monkeys)
+        {
+            Console.WriteLine($"Monkey: {string.Join(",", monkey.ItemWorryLevels)}");
+        }
+        Console.WriteLine("");
 
         // Round
-        foreach(var round in Enumerable.Range(1, 20))
+        foreach (var round in Enumerable.Range(1, 20))
         {
             // For each monkey
             foreach(var monkey in monkeys)
@@ -28,9 +37,25 @@ public static class PartOne
 
                     monkey.ItemWorryLevels[i] = monkey.ItemWorryLevels[i] / 3;
 
-                    monkey.Test(i);
+                    var targetMonkey = monkey.GetMonkeyToThrowTo(monkey.ItemWorryLevels[i]);
+
+                    monkeys.ElementAt(targetMonkey).ItemWorryLevels.Add(monkey.ItemWorryLevels[i]);
                 }
+
+                monkey.ItemWorryLevels = new List<int>();
             }
+
+            Console.WriteLine($"Round {round} with items:");
+            foreach (var monkey in monkeys)
+            {
+                Console.WriteLine($"Monkey: {string.Join(",", monkey.ItemWorryLevels)}");
+            }
+            Console.WriteLine("");
         }
+
+        var monkeyBusiness = monkeys.Select(m => m.NumTimesInspected).OrderByDescending(m => m);
+        Console.WriteLine($"Monkey: {string.Join(",", monkeyBusiness)}");
+        Console.WriteLine($"Monkey business: {monkeyBusiness.Take(2).Aggregate((a,x)=>a * x)}");
+        Console.WriteLine("");
     }
 }
