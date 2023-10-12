@@ -40,5 +40,23 @@ namespace CollisionDetection.Tests
 
             Assert.That(result, Is.EqualTo(2));
         }
+
+
+        [Test]
+        public void NumberOfCollisionsDivide_WithOneDuplicate_ReturnsFour()
+        {
+            var positions = new int[][]
+            {
+                new int[] { 1, 1 },
+                new int[] { 1, 1 },
+                new int[] { 2, 2 },
+                new int[] { 0, 4 },
+            };
+            var runner = new Library.Solution();
+
+            var result = runner.NumberOfCollisionsDivide(positions);
+
+            Assert.That(result, Is.EqualTo(4));
+        }
     }
 }

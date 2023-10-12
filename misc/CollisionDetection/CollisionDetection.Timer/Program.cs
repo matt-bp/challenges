@@ -28,16 +28,16 @@ var options = new ProgressBarOptions
     ProgressBarOnBottom = true
 };
 
-using (var pbar = new ProgressBar(max, "Initial message", options))
+using (var pbar = new ProgressBar(max / factor, "Initial message", options))
 {
     var listGenerator = new ListGenerator();
-    for (var i = 0; i < max; i++)
+    for (var size = 1; size < max; size += factor)
     {
-        var positions = listGenerator.Generate(i, -5 * factor, 5 * factor);
+        var positions = listGenerator.Generate(size, -5 * factor, 5 * factor);
 
         var watch = Stopwatch.StartNew();
 
-        runner.NumberOfCollisionsDivide(positions);
+        runner.NumberOfCollisions(positions);
 
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;
@@ -48,7 +48,7 @@ using (var pbar = new ProgressBar(max, "Initial message", options))
             NumberOfPositions = positions.Length,
         });
 
-        pbar.Tick($"{i}/{max}");
+        pbar.Tick($"{size}/{max}");
     }
 }
 
