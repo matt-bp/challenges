@@ -1,26 +1,33 @@
-﻿using System.Security.Cryptography;
+﻿using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
-var summary = BenchmarkRunner.Run<Md5VsSha256>();
+var summary = BenchmarkRunner.Run<MineVsSolution>();
 
-public class Md5VsSha256
+public class MineVsSolution
 {
     private const int N = 10000;
-    private readonly byte[] data;
+    private const int M = 1000;
+    private readonly int[] data;
+    private readonly int[] toRemove;
 
-    private readonly SHA256 sha256 = SHA256.Create();
-    private readonly MD5 md5 = MD5.Create();
-
-    public Md5VsSha256()
+    public MineVsSolution()
     {
-        data = new byte[N];
-        new Random(42).NextBytes(data);
+        var r = new Random();
+        data = (new int[N]).Select(x => r.Next(0, N)).ToArray();
+        toRemove = (new int[M]).Select(x => r.Next(0, M)).ToArray();
     }
 
     [Benchmark]
-    public byte[] Sha256() => sha256.ComputeHash(data);
+    public int[] Mine() => kata_array_diff.lib.Kata.ArrayDiff(data, toRemove);
 
     [Benchmark]
-    public byte[] Md5() => md5.ComputeHash(data);
+    public int[] Solution() => kata_array_diff.lib.Others.SolutionArrayDiff(data, toRemove);
+
+    [Benchmark]
+    public int[] ArrayContains() => kata_array_diff.lib.Others.ArrayContainsArrayDiff(data, toRemove);
+
+    [Benchmark]
+    public int[] ArrayFindAll() => kata_array_diff.lib.Others.FindAllArrayDiff(data, toRemove);
 }
