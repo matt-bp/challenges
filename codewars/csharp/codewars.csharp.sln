@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kata-array-diff.library", "kata-array-diff.lib\kata-array-diff.library.csproj", "{DF927116-A99B-46B8-83C3-27F6994556D5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kata-array-diff.unittests", "kata-array-diff.unittests\kata-array-diff.unittests.csproj", "{0F2061DB-9880-46CA-B90F-563651066760}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kata-array-diff.benchmark", "kata-array-diff.benchmark\kata-array-diff.benchmark.csproj", "{FE4656B7-CF97-45A7-9509-72359B62EBEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kata-array-diff.library", "kata-array-diff.library\kata-array-diff.library.csproj", "{6FCA55E7-8F95-4F72-8564-08374A055C2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF927116-A99B-46B8-83C3-27F6994556D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF927116-A99B-46B8-83C3-27F6994556D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF927116-A99B-46B8-83C3-27F6994556D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF927116-A99B-46B8-83C3-27F6994556D5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F2061DB-9880-46CA-B90F-563651066760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F2061DB-9880-46CA-B90F-563651066760}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F2061DB-9880-46CA-B90F-563651066760}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{FE4656B7-CF97-45A7-9509-72359B62EBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE4656B7-CF97-45A7-9509-72359B62EBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE4656B7-CF97-45A7-9509-72359B62EBEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FCA55E7-8F95-4F72-8564-08374A055C2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FCA55E7-8F95-4F72-8564-08374A055C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FCA55E7-8F95-4F72-8564-08374A055C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FCA55E7-8F95-4F72-8564-08374A055C2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
