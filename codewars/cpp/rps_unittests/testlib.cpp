@@ -1,11 +1,12 @@
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 #include <rps_lib/lib.hpp>
 
-TEST_CASE( "Quick check", "[main]" ) {
-    std::vector<double> values {1, 2., 3.};
-    auto [front, back] = a(values);
+TEST_CASE("Draw", "[rps]") {
+    const std::string p1 = "rock";
+    const std::string p2 = "rock";
 
-    REQUIRE(front == 1.0);
-    REQUIRE(back == 3.0);
+    const auto result = rps(p1, p2);
+
+    REQUIRE_THAT(result, Catch::Matchers::ContainsSubstring("Draw!"));
 }
