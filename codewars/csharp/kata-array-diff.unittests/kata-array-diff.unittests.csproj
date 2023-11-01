@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\kata-array-diff.lib\kata-array-diff.lib.csproj" />
+    <ProjectReference Include="..\kata-array-diff.lib\kata-array-diff.library.csproj" />
   </ItemGroup>
 
 </Project>
