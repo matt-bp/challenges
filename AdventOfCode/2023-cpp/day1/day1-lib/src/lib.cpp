@@ -35,7 +35,12 @@ std::string combine_pair(std::optional<char> first,
   std::stringstream ss;
 
   ss << first.value();
-  ss << second.value();
+
+  if (!second.has_value()) {
+    ss << first.value();
+  } else {
+    ss << second.value();
+  }
 
   return ss.str();
 }
