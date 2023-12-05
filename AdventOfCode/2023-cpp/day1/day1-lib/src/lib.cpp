@@ -1,8 +1,8 @@
 #include "day1/lib.hpp"
 
+#include <iostream>
 #include <optional>
 #include <regex>
-#include <iostream>
 #include <sstream>
 
 char get_digit(const std::string &str) {
@@ -25,7 +25,8 @@ char get_digit(const std::string &str) {
   } else if (str == "nine" || str == "9") {
     return '9';
   } else {
-    throw std::runtime_error("Achk!");
+    const auto message = "Achk! " + str;
+    throw std::runtime_error(message);
   }
 }
 
@@ -58,31 +59,53 @@ std::string aoc::day1::get_two_digit_p1(const std::string &str) {
 }
 
 std::string aoc::day1::get_two_digit_p2(const std::string &str) {
-  std::regex digits_regex("[1-9]|one|two|three|four|five|six|seven|eight|nine");
+  std::regex digits_regex(
+      "(?=([1-9]|one|two|three|four|five|six|seven|eight|nine)).");
   std::smatch digits_match;
 
   std::optional<char> first;
   std::optional<char> second;
 
-  std::cout << str << '\n';
+//  std::cout << str << '\n';
 
+  auto next = std::sregex_iterator(str.begin(), str.end(), digits_regex);
   const auto end = std::sregex_iterator();
-  for (auto i = std::sregex_iterator(str.begin(), str.end(), digits_regex);
-       i != end; ++i) {
-    const std::smatch &m = *i;
-    std::cout << "\t" << m.str() << " at position " << m.position() << '\n';
 
-    const auto c = get_digit(m.str());
+  while (next != end) {
+    const std::smatch &matches = *next;
+
+    const auto c = get_digit(matches[1].str());
 
     if (!first.has_value()) {
       first = c;
-      second = c;
     } else {
       second = c;
     }
+
+    ++next;
   }
 
-  std::cout << "  chose: " << first.value() << "," << second.value() << '\n';
+//  std::cout << "  chose: " << first.value() << "," << second.value() << '\n';
 
   return combine_pair(first, second);
+}
+
+void aoc::day1::print_all_digit_matches(const std::string &str) {
+  std::regex digits_regex(
+      "(?=([1-9]|one|two|three|four|five|six|seven|eight|nine)).");
+
+  std::cout << str << '\n';
+
+  auto next = std::sregex_iterator(str.begin(), str.end(), digits_regex);
+  const auto end = std::sregex_iterator();
+
+  while (next != end) {
+    const std::smatch &matches = *next;
+
+    for (size_t i = 0; i < matches.size(); ++i) {
+      std::cout << "\t" << i << ": '" << matches[i].str() << "'\n";
+    }
+
+    ++next;
+  }
 }

@@ -1,6 +1,6 @@
 .vs
 out
 
-cmake-build-debug-visual-studio
+cmake-build-*
 
 vcpkg_installed

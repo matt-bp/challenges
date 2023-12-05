@@ -1,4 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
+#include <day1/lib.hpp>
 
 using namespace Catch;
 
@@ -27,7 +28,29 @@ using namespace Catch;
 //     return in;
 // }
 
-TEST_CASE("convert_to_glm, with some aiMatrix4x4, returns that matrix in "
-          "column major order") {
-  REQUIRE(true == true);
+TEST_CASE("Simple string part 1, numbers on end, returns those two") {
+  const auto input = "1abc2";
+  const auto result = aoc::day1::get_two_digit_p1(input);
+
+  REQUIRE(result == "12");
 }
+
+TEST_CASE("Simple string part 2, numbers spelled out on end, returns those two") {
+  const auto input = "two1nine";
+  const auto result = aoc::day1::get_two_digit_p2(input);
+
+  REQUIRE(result == "29");
+}
+
+TEST_CASE("Simple string part 2, overlapped numbers, returns those two") {
+  const auto input = "eightwo";
+  const auto result = aoc::day1::get_two_digit_p2(input);
+
+  REQUIRE(result == "82");
+}
+
+//TEST_CASE("Test output") {
+//  aoc::day1::print_all_digit_matches("eightwo");
+//
+//  REQUIRE(true == true);
+//}
