@@ -9,5 +9,14 @@ project(
   LANGUAGES CXX
 )
 
+message("Toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+
+# Only do these if this is the main project, and not if it is included through add_subdirectory
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+
+include(./vcpkg/scripts/buildsystems/vcpkg.cmake)
+
+endif()
+
 add_subdirectory(day1)
 add_subdirectory(shared)
