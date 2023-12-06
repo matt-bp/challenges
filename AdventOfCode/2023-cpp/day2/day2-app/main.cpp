@@ -15,8 +15,6 @@ void part_two(const std::vector<std::string> &lines);
 
 int main(int argc, char **argv)
 {
-    std::cout << "Hello world!" << std::endl;
-
     // We pass in our pointer, and how many elements are in it.
     // We're skipping the first, which is the path to this executable.
     std::vector<std::string> arguments(argv + 1, argv + argc);
