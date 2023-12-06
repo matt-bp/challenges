@@ -1,5 +1,6 @@
 .vs
 out
+.idea
 
 cmake-build-*
 
