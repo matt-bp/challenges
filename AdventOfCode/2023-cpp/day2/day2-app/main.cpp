@@ -9,6 +9,36 @@
 #include <ranges>
 #include <vector>
 
+void part_one(const std::vector<std::string>& lines)
+{
+    std::cout << "Part One" << '\n';
+    std::cout << "==========================" << '\n';
+
+    aoc::day2::RevealedCubeSet limit{12, 13, 14};
+
+    auto none_above_limit = [limit](const auto r) {
+        return r.red <= limit.red && r.green <= limit.green && r.blue <= limit.blue;
+    };
+
+    auto is_possible = [&](const auto pairs) {
+        return std::all_of(pairs.second.begin(), pairs.second.end(), none_above_limit);
+    };
+
+    auto get_game_id = [](const auto pair) { return pair.first; };
+
+    // clang-format off
+    auto not_possibles = lines 
+        | std::views::transform(aoc::day2::get_sets_from_game) 
+        | std::views::filter(is_possible)
+        | std::views::transform(get_game_id)
+        | std::ranges::to<std::vector>();
+    // clang-format on
+
+    auto count = std::accumulate(not_possibles.begin(), not_possibles.end(), 0);
+
+    std::cout << "Sum of game id is: " << count << std::endl;
+}
+
 int main(int argc, char **argv)
 {
     std::cout << "Hello world!" << std::endl;
@@ -29,31 +59,7 @@ int main(int argc, char **argv)
     const auto &filename = arguments[1];
     const auto lines = aoc::file::getAllLinesFromFile(filename);
 
-    std::cout << "Got " << lines.size() << " lines." << '\n';
-
-    aoc::day2::RevealedCubeSet limit{12, 13, 14};
-
-    auto none_above_limit = [limit](const auto r) {
-        return r.red < limit.red && r.green < limit.green && r.blue < limit.blue;
-    };
-
-    auto is_possible = [&](const auto pairs) {
-        return std::all_of(pairs.second.begin(), pairs.second.end(), none_above_limit);
-    };
-
-    auto get_game_id = [](const auto pair) { return pair.first; };
-
-    // clang-format off
-    auto not_possibles = lines 
-        | std::views::transform(aoc::day2::get_sets_from_game) 
-        | std::views::filter(is_possible)
-        | std::views::transform(get_game_id)
-        | std::ranges::to<std::vector>();
-    // clang-format on
-
-    auto count = std::accumulate(not_possibles.begin(), not_possibles.end(), 0);
-
-    std::cout << "Sum of game id is: " << count << std::endl;
+    part_one(lines);
 
     return 0; // Exit successfully
 }
