@@ -1,15 +1,17 @@
-#include <string>
 #include <map>
+#include <string>
 #include <vector>
 
-namespace aoc::day2 {
+namespace aoc::day2
+{
 
 void test();
 
-struct RevealedCubeSet {
-  int red;
-  int green;
-  int blue;
+struct RevealedCubeSet
+{
+    int red;
+    int green;
+    int blue;
 };
 
 std::vector<RevealedCubeSet> get_sets_from_game(const std::string &game);
