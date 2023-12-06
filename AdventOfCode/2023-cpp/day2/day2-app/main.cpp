@@ -9,6 +9,7 @@
 #include <ranges>
 #include <tuple>
 #include <vector>
+#include <functional>
 
 void part_one(const std::vector<std::string> &lines);
 void part_two(const std::vector<std::string> &lines);
@@ -64,11 +65,10 @@ void part_one(const std::vector<std::string> &lines)
     auto not_possibles = lines 
         | std::views::transform(aoc::day2::get_sets_from_game) 
         | std::views::filter(is_possible)
-        | std::views::transform(get_game_id)
-        | std::ranges::to<std::vector>();
+        | std::views::transform(get_game_id);
     // clang-format on
 
-    auto sum = std::accumulate(not_possibles.begin(), not_possibles.end(), 0);
+    auto sum = std::ranges::fold_left(power_sets, 0, std::plus());
 
     std::cout << "Sum of game id is: " << sum << std::endl;
 }
@@ -101,11 +101,10 @@ void part_two(const std::vector<std::string> &lines)
     auto power_sets = lines 
         | std::views::transform(aoc::day2::get_sets_from_game) 
         | std::views::transform(get_upper_bound_on_game_color)
-        | std::views::transform(get_power_of_set)
-        | std::ranges::to<std::vector>();
+        | std::views::transform(get_power_of_set);
     // clang-format on
 
-    auto sum = std::accumulate(power_sets.begin(), power_sets.end(), 0);
+    auto sum = std::ranges::fold_left(power_sets, 0, std::plus());
 
     std::cout << "Sum of power of sets is: " << sum << std::endl;
 }

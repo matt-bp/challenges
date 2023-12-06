@@ -1,7 +1,7 @@
 # Tests need to be added as executables first
 add_executable(day2_lib_tests test.cpp)
 
-target_compile_features(day2_lib_tests PRIVATE cxx_std_17)
+target_compile_features(day2_lib_tests PRIVATE cxx_std_23)
 
 # =====================================================================
 # Adding Dependencies

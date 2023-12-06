@@ -1,6 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_predicate.hpp>
 #include <day2/lib.hpp>
+#include <ranges>
+#include <concepts>
+#include <cstdio>
 
 using namespace Catch;
 using namespace aoc::day2;
@@ -34,4 +37,18 @@ TEST_CASE("get_sets_from_game_with_two_sets_returns_both")
     REQUIRE_THAT(result.second[1], Matchers::Predicate<RevealedCubeSet>([expected](RevealedCubeSet v) {
                      return v.red == expected.red && v.green == expected.green && v.blue == expected.blue;
                  }));
+}
+
+// For fun :)
+TEST_CASE("String reversal C++23?")
+{
+    std::string input = "Hello world!";
+
+    std::puts(input.c_str());
+
+    auto reversed = input | std::views::reverse | std::ranges::to<std::string>();
+
+    std::puts(reversed.c_str());
+
+    REQUIRE(true == true);
 }
