@@ -68,7 +68,7 @@ void part_one(const std::vector<std::string> &lines)
         | std::views::transform(get_game_id);
     // clang-format on
 
-    auto sum = std::ranges::fold_left(power_sets, 0, std::plus());
+    auto sum = std::ranges::fold_left(not_possibles, 0, std::plus());
 
     std::cout << "Sum of game id is: " << sum << std::endl;
 }
