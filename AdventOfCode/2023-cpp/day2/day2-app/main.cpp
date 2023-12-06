@@ -7,9 +7,45 @@
 #include <list>
 #include <numeric>
 #include <ranges>
+#include <tuple>
 #include <vector>
 
-void part_one(const std::vector<std::string>& lines)
+void part_one(const std::vector<std::string> &lines);
+void part_two(const std::vector<std::string> &lines);
+
+int main(int argc, char **argv)
+{
+    std::cout << "Hello world!" << std::endl;
+
+    // We pass in our pointer, and how many elements are in it.
+    // We're skipping the first, which is the path to this executable.
+    std::vector<std::string> arguments(argv + 1, argv + argc);
+
+    // Check if there are any arguments
+    if (arguments.size() != 2)
+    {
+        std::cout << "Usage: " << argv[0] << " <part> <input filename>" << std::endl;
+        return 1;
+    }
+
+    const auto part = std::stoi(arguments[0]);
+
+    const auto &filename = arguments[1];
+    const auto lines = aoc::file::getAllLinesFromFile(filename);
+
+    if (part == 1)
+    {
+        part_one(lines);
+    }
+    else if (part == 2)
+    {
+        part_two(lines);
+    }
+
+    return 0; // Exit successfully
+}
+
+void part_one(const std::vector<std::string> &lines)
 {
     std::cout << "Part One" << '\n';
     std::cout << "==========================" << '\n';
@@ -34,32 +70,44 @@ void part_one(const std::vector<std::string>& lines)
         | std::ranges::to<std::vector>();
     // clang-format on
 
-    auto count = std::accumulate(not_possibles.begin(), not_possibles.end(), 0);
+    auto sum = std::accumulate(not_possibles.begin(), not_possibles.end(), 0);
 
-    std::cout << "Sum of game id is: " << count << std::endl;
+    std::cout << "Sum of game id is: " << sum << std::endl;
 }
 
-int main(int argc, char **argv)
+void part_two(const std::vector<std::string> &lines)
 {
-    std::cout << "Hello world!" << std::endl;
+    std::cout << "Part Two" << '\n';
+    std::cout << "==========================" << '\n';
 
-    // We pass in our pointer, and how many elements are in it.
-    // We're skipping the first, which is the path to this executable.
-    std::vector<std::string> arguments(argv + 1, argv + argc);
+    auto get_upper_bound_on_game_color = [&](const auto pairs) {
+        int max_red = std::numeric_limits<int>::min();
+        int max_green = std::numeric_limits<int>::min();
+        int max_blue = std::numeric_limits<int>::min();
 
-    // Check if there are any arguments
-    if (arguments.size() != 2)
-    {
-        std::cout << "Usage: " << argv[0] << " <part> <input filename>" << std::endl;
-        return 1;
-    }
+        for (const auto &set : pairs.second)
+        {
+            max_red = std::max(set.red, max_red);
+            max_green = std::max(set.green, max_green);
+            max_blue = std::max(set.blue, max_blue);
+        }
 
-    const auto part = std::stoi(arguments[0]);
+        return std::make_tuple(max_red, max_green, max_blue);
+    };
 
-    const auto &filename = arguments[1];
-    const auto lines = aoc::file::getAllLinesFromFile(filename);
+    auto get_power_of_set = [](const auto maxes) {
+        return std::get<0>(maxes) * std::get<1>(maxes) * std::get<2>(maxes);
+    };
 
-    part_one(lines);
+    // clang-format off
+    auto power_sets = lines 
+        | std::views::transform(aoc::day2::get_sets_from_game) 
+        | std::views::transform(get_upper_bound_on_game_color)
+        | std::views::transform(get_power_of_set)
+        | std::ranges::to<std::vector>();
+    // clang-format on
 
-    return 0; // Exit successfully
+    auto sum = std::accumulate(power_sets.begin(), power_sets.end(), 0);
+
+    std::cout << "Sum of power of sets is: " << sum << std::endl;
 }
