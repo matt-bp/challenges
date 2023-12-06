@@ -33,12 +33,12 @@ int main(int argc, char **argv)
 
     aoc::day2::RevealedCubeSet limit{12, 13, 14};
 
-    auto any_property_greater_than_limit = [limit](const auto r) {
-        return r.red > limit.red || r.green > limit.green || r.blue > limit.blue;
+    auto none_above_limit = [limit](const auto r) {
+        return r.red < limit.red && r.green < limit.green && r.blue < limit.blue;
     };
 
-    auto is_not_possible = [&](const auto pairs) {
-        return std::any_of(pairs.second.begin(), pairs.second.end(), any_property_greater_than_limit);
+    auto is_possible = [&](const auto pairs) {
+        return std::all_of(pairs.second.begin(), pairs.second.end(), none_above_limit);
     };
 
     auto get_game_id = [](const auto pair) { return pair.first; };
@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     // clang-format off
     auto not_possibles = lines 
         | std::views::transform(aoc::day2::get_sets_from_game) 
-        | std::views::filter(is_not_possible)
+        | std::views::filter(is_possible)
         | std::views::transform(get_game_id)
         | std::ranges::to<std::vector>();
     // clang-format on
