@@ -12,9 +12,16 @@ void test()
     std::cout << "Test" << '\n';
 }
 
-std::vector<RevealedCubeSet> get_sets_from_game(const std::string &game)
+std::pair<int, std::vector<RevealedCubeSet>> get_sets_from_game(const std::string &game)
 {
     std::vector<RevealedCubeSet> result;
+
+    std::regex game_number_regex("Game (\\d+):");
+    std::smatch ms;
+
+    assert(std::regex_search(game, ms, game_number_regex));
+    
+    int game_number = std::stoi(ms[1]);
 
     std::string beginning = ":";
 
@@ -62,22 +69,7 @@ std::vector<RevealedCubeSet> get_sets_from_game(const std::string &game)
         result.push_back(new_result);
     }
 
-    return result;
-}
-
-RevealedCubeSet get_max_colors_in_game(const std::vector<RevealedCubeSet> &sets)
-{
-    RevealedCubeSet max{std::numeric_limits<int>::min(), std::numeric_limits<int>::min(),
-                        std::numeric_limits<int>::min()};
-
-    for (const auto &set : sets)
-    {
-        max.red = std::max(set.red, max.red);
-        max.green = std::max(set.green, max.green);
-        max.blue = std::max(set.blue, max.blue);
-    }
-
-    return max;
+    return std::make_pair(game_number, result);
 }
 
 } // namespace aoc::day2

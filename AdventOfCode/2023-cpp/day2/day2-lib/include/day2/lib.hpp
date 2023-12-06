@@ -1,6 +1,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <utility>
 
 namespace aoc::day2
 {
@@ -14,8 +15,6 @@ struct RevealedCubeSet
     int blue;
 };
 
-std::vector<RevealedCubeSet> get_sets_from_game(const std::string &game);
-
-RevealedCubeSet get_max_colors_in_game(const std::vector<RevealedCubeSet> &sets);
+std::pair<int, std::vector<RevealedCubeSet>> get_sets_from_game(const std::string &game);
 
 } // namespace aoc::day2
