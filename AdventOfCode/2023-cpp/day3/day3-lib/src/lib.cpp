@@ -41,7 +41,7 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
     // std::set<std::pair<int, int>> already_used_cells;
 
     auto is_valid_and_a_number = [&engine](int row, int col) -> bool {
-        if (col < 0)
+        if (col < 0 || col >= engine[0].size())
             return false;
 
         return engine[row][col].type & TokenType::NUMBER;
@@ -96,6 +96,12 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
                 if (is_valid_and_a_number(row, col - 1))
                 {
                     numbers_found.push_back(construct_number_from_found_token(row, col - 1));
+                }
+
+                // Check right side
+                if (is_valid_and_a_number(row, col + 1))
+                {
+                    numbers_found.push_back(construct_number_from_found_token(row, col + 1));
                 }
             }
         }

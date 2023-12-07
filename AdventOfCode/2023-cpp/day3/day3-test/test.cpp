@@ -87,18 +87,18 @@ TEST_CASE("get_numbers_by_symbols, two numbers left of symbol, returns sum of th
     REQUIRE(result[0] == 37);
 }
 
-//TEST_CASE("get_numbers_by_symbols, two numbers right of symbol, returns sum of those numbers")
-//{
-//    std::vector<std::vector<EngineToken>> engine;
-//
-//    std::vector<EngineToken> first_row;
-//    first_row.push_back(EngineToken{0, TokenType::SYMBOL});
-//    first_row.push_back(EngineToken{8, TokenType::NUMBER});
-//    first_row.push_back(EngineToken{5, TokenType::NUMBER});
-//    
-//    engine.push_back(first_row);
-//
-//    auto result = get_numbers_by_symbols(engine);
-//
-//    REQUIRE(result[0] == 85);
-//}
+TEST_CASE("get_numbers_by_symbols, two numbers right of symbol, returns sum of those numbers")
+{
+    std::vector<std::vector<EngineToken>> engine;
+
+    std::vector<EngineToken> first_row;
+    first_row.push_back(EngineToken{0, TokenType::SYMBOL});
+    first_row.push_back(EngineToken{8, TokenType::NUMBER});
+    first_row.push_back(EngineToken{5, TokenType::NUMBER});
+    
+    engine.push_back(first_row);
+
+    auto result = get_numbers_by_symbols(engine);
+
+    REQUIRE(result[0] == 85);
+}
