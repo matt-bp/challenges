@@ -38,10 +38,18 @@ std::vector<EngineToken> tokenize_engine_line(const std::string &engine_line)
 
 std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToken>> &engine)
 {
-    // std::set<std::pair<int, int>> already_used_cells;
+     std::set<std::pair<int, int>> already_used_cells;
 
-    auto is_valid_and_a_number = [&engine](int row, int col) -> bool {
+    auto row_col_taken = [&already_used_cells](int row, int col) {
+         auto search = already_used_cells.find(std::make_pair(row, col));
+         return search != already_used_cells.end();
+     };
+
+    auto is_valid_available_and_a_number = [&](int row, int col) -> bool {
         if (col < 0 || col >= engine[0].size())
+            return false;
+
+        if (row_col_taken(row, col))
             return false;
 
         return engine[row][col].type & TokenType::NUMBER;
@@ -56,23 +64,20 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
         return cells;
     };
 
-    // auto row_col_available = [&already_used_cells](int row, int col) {
-    //     auto search = already_used_cells.find(std::make_pair(row, col));
-    //     return search != already_used_cells.end();
-    // };
-
     auto construct_number_from_found_token = [&](int row, int col) {
         // first, find all the numbers that are connected together
         std::map<int, int> connected_numbers{};
 
+        connected_numbers.insert({col, engine[row][col].value});
+
         // first go left
-        for (auto temp_col = col; is_valid_and_a_number(row, temp_col); temp_col--)
+        for (auto temp_col = col - 1; is_valid_available_and_a_number(row, temp_col); temp_col--)
         {
             connected_numbers.insert({temp_col, engine[row][temp_col].value});
         }
 
         // then right
-        for (auto temp_col = col + 1; is_valid_and_a_number(row, temp_col); temp_col++)
+        for (auto temp_col = col + 1; is_valid_available_and_a_number(row, temp_col); temp_col++)
         {
             connected_numbers.insert({temp_col, engine[row][temp_col].value});
         }
@@ -101,7 +106,7 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
             {
                 for (const auto &cell : create_cells_to_check(row, col))
                 {
-                    if (!is_valid_and_a_number(cell.first, cell.second))
+                    if (!is_valid_available_and_a_number(cell.first, cell.second))
                         continue;
 
                     numbers_found.push_back(construct_number_from_found_token(cell.first, cell.second));
