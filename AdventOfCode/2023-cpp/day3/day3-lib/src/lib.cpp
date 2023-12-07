@@ -37,16 +37,31 @@ std::vector<EngineToken> tokenize_engine_line(const std::string &engine_line)
 
 std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToken>> &engine)
 {
-    std::set<std::pair<int, int>> already_used_cells;
+    //std::set<std::pair<int, int>> already_used_cells;
+
+    //auto row_col_available = [&already_used_cells](int row, int col) {
+    //    auto search = already_used_cells.find(std::make_pair(row, col));
+    //    return search != already_used_cells.end();
+    //};
 
     auto construct_number_from_found_token = [&](int row, int col) {
-        already_used_cells.insert(std::make_pair(row, col));
-        return engine[row][col].value;
-    };
+        int temp_row = row;
+        int temp_col = col;
 
-    auto row_col_already_used = [&already_used_cells](int row, int col) {
-        auto search = already_used_cells.find(std::make_pair(row, col));
-        return search != already_used_cells.end();
+        int multiplier = 1;
+        int sum = 0;
+
+        while (temp_col >= 0)
+        {
+            //already_used_cells.insert(std::make_pair(row, col));
+
+            sum += engine[temp_row][temp_col].value * multiplier;
+
+            multiplier *= 10;
+            temp_col -= 1;
+        }
+
+        return sum;
     };
 
     std::vector<int> numbers_found;
@@ -58,7 +73,7 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
             if (engine[row][col].type & TokenType::SYMBOL)
             {
                 // Check left side
-                if (col >= 1 && !row_col_already_used(row, col - 1) && engine[row][col - 1].type & TokenType::NUMBER)
+                if (col > 0 && (engine[row][col - 1].type & TokenType::NUMBER))
                 {
                     numbers_found.push_back(construct_number_from_found_token(row, col - 1));
                 }

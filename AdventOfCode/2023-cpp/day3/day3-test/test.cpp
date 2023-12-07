@@ -62,3 +62,19 @@ TEST_CASE("get_numbers_by_symbols, one number left of symbol, returns that token
 
     REQUIRE(result[0].value == 7);
 }
+
+TEST_CASE("get_numbers_by_symbols, two numbers left of symbol, returns sum of those numbers")
+{
+    std::vector<std::vector<EngineToken>> engine;
+
+    std::vector<EngineToken> first_row;
+    first_row.push_back(EngineToken{7, TokenType::NUMBER});
+    first_row.push_back(EngineToken{7, TokenType::NUMBER});
+    first_row.push_back(EngineToken{0, TokenType::SYMBOL});
+
+    engine.push_back(first_row);
+
+    auto result = get_numbers_by_symbols(engine);
+
+    REQUIRE(result[0] == 77);
+}
