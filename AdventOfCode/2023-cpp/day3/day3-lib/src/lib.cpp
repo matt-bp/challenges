@@ -37,12 +37,19 @@ std::vector<EngineToken> tokenize_engine_line(const std::string &engine_line)
 
 std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToken>> &engine)
 {
-    //std::set<std::pair<int, int>> already_used_cells;
+    // std::set<std::pair<int, int>> already_used_cells;
 
-    //auto row_col_available = [&already_used_cells](int row, int col) {
-    //    auto search = already_used_cells.find(std::make_pair(row, col));
-    //    return search != already_used_cells.end();
-    //};
+    auto is_valid_and_a_number = [&engine](int row, int col) -> bool {
+        if (col < 0)
+            return false;
+
+        return engine[row][col].type & TokenType::NUMBER;
+    };
+
+    // auto row_col_available = [&already_used_cells](int row, int col) {
+    //     auto search = already_used_cells.find(std::make_pair(row, col));
+    //     return search != already_used_cells.end();
+    // };
 
     auto construct_number_from_found_token = [&](int row, int col) {
         int temp_row = row;
@@ -51,9 +58,9 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
         int multiplier = 1;
         int sum = 0;
 
-        while (temp_col >= 0)
+        while (is_valid_and_a_number(temp_row, temp_col))
         {
-            //already_used_cells.insert(std::make_pair(row, col));
+            // already_used_cells.insert(std::make_pair(row, col));
 
             sum += engine[temp_row][temp_col].value * multiplier;
 
@@ -73,7 +80,7 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
             if (engine[row][col].type & TokenType::SYMBOL)
             {
                 // Check left side
-                if (col > 0 && (engine[row][col - 1].type & TokenType::NUMBER))
+                if (is_valid_and_a_number(row, col - 1))
                 {
                     numbers_found.push_back(construct_number_from_found_token(row, col - 1));
                 }
