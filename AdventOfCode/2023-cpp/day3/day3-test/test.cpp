@@ -44,3 +44,13 @@ TEST_CASE("tokenize_engine_line, with not a period or number, returns symbol tok
 
     REQUIRE(result[0].type == TokenType::SYMBOL);
 }
+
+TEST_CASE("get_numbers_by_symbols, no numbers by symbols, returns empty list")
+{
+    auto engine_line = "";
+
+    auto result = tokenize_engine_line(engine_line);
+
+    REQUIRE(result.empty());
+}
+
