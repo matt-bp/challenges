@@ -47,12 +47,9 @@ void part_one(const std::vector<std::string> &lines)
     auto engine = lines 
         | std::views::transform(tokenize_engine_line) 
         | std::ranges::to<std::vector>();
-
-    auto values_of_numbers_by_symbols = get_numbers_by_symbols(engine)
-        | std::views::transform([](const auto v) { return v.value; });
     // clang-format on
 
-    auto sum = std::ranges::fold_left(values_of_numbers_by_symbols, 0, std::plus());
+    auto sum = std::ranges::fold_left(get_numbers_by_symbols(engine), 0, std::plus());
 
     std::cout << "Sum of game id is: " << sum << std::endl;
 }

@@ -23,7 +23,7 @@ TEST_CASE("tokenize_engine_line, with number, returns number token")
 
     auto result = tokenize_engine_line(engine_line);
 
-    REQUIRE(result[0].type == TokenType::NUMBER);
+    REQUIRE(result[0].type & TokenType::NUMBER);
     REQUIRE(result[0].value == 7);
 }
 
@@ -33,7 +33,7 @@ TEST_CASE("tokenize_engine_line, with a period, returns period token")
 
     auto result = tokenize_engine_line(engine_line);
 
-    REQUIRE(result[0].type == TokenType::PERIOD);
+    REQUIRE(result[0].type & TokenType::PERIOD);
 }
 
 TEST_CASE("tokenize_engine_line, with not a period or number, returns symbol token")
@@ -42,7 +42,7 @@ TEST_CASE("tokenize_engine_line, with not a period or number, returns symbol tok
 
     auto result = tokenize_engine_line(engine_line);
 
-    REQUIRE(result[0].type == TokenType::SYMBOL);
+    REQUIRE(result[0].type & TokenType::SYMBOL);
 }
 
 TEST_CASE("get_numbers_by_symbols, no numbers by symbols, returns empty list")
@@ -54,3 +54,11 @@ TEST_CASE("get_numbers_by_symbols, no numbers by symbols, returns empty list")
     REQUIRE(result.empty());
 }
 
+TEST_CASE("get_numbers_by_symbols, one number left of symbol, returns that token")
+{
+    auto engine_line = "7*";
+
+    auto result = tokenize_engine_line(engine_line);
+
+    REQUIRE(result[0].value == 7);
+}

@@ -22,6 +22,6 @@ struct EngineToken
 
 std::vector<EngineToken> tokenize_engine_line(const std::string &engine_line);
 
-std::vector<EngineToken> get_numbers_by_symbols(const std::vector<std::vector<EngineToken>> &engine);
+std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToken>> &engine);
 
 } // namespace aoc::day3
