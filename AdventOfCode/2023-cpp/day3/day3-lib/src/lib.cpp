@@ -41,7 +41,7 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
      std::set<std::pair<int, int>> already_used_cells;
 
     auto row_col_taken = [&already_used_cells](int row, int col) {
-         auto search = already_used_cells.find(std::make_pair(row, col));
+         auto search = already_used_cells.find({row, col});
          return search != already_used_cells.end();
      };
 
@@ -51,6 +51,8 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
 
         if (row_col_taken(row, col))
             return false;
+
+        already_used_cells.insert({row, col});
 
         return engine[row][col].type & TokenType::NUMBER;
     };
