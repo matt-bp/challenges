@@ -38,12 +38,12 @@ std::vector<EngineToken> tokenize_engine_line(const std::string &engine_line)
 
 std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToken>> &engine)
 {
-     std::set<std::pair<int, int>> already_used_cells;
+    std::set<std::pair<int, int>> already_used_cells;
 
     auto row_col_taken = [&already_used_cells](int row, int col) {
-         auto search = already_used_cells.find({row, col});
-         return search != already_used_cells.end();
-     };
+        auto search = already_used_cells.find({row, col});
+        return search != already_used_cells.end();
+    };
 
     auto is_valid_available_and_a_number = [&](int row, int col) -> bool {
         if (col < 0 || col >= engine[0].size())
