@@ -102,3 +102,21 @@ TEST_CASE("get_numbers_by_symbols, two numbers right of symbol, returns sum of t
 
     REQUIRE(result[0] == 85);
 }
+
+TEST_CASE("get_numbers_by_symbols, numbers inbetween symbols, returns one number")
+{
+    std::vector<std::vector<EngineToken>> engine;
+
+    std::vector<EngineToken> first_row;
+    first_row.push_back(EngineToken{0, TokenType::SYMBOL});
+    first_row.push_back(EngineToken{2, TokenType::NUMBER});
+    first_row.push_back(EngineToken{9, TokenType::NUMBER});
+    first_row.push_back(EngineToken{0, TokenType::SYMBOL});
+
+    engine.push_back(first_row);
+
+    auto result = get_numbers_by_symbols(engine);
+
+    REQUIRE(result.size() == 1);
+    REQUIRE(result[0] == 29);
+}

@@ -49,6 +49,9 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
         if (col < 0 || col >= engine[0].size())
             return false;
 
+        if (row < 0 || row >= engine.size())
+            return false;
+
         if (row_col_taken(row, col))
             return false;
 
@@ -60,8 +63,19 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
     auto create_cells_to_check = [](int row, int col) {
         std::vector<std::pair<int, int>> cells;
 
+        // Top
+        cells.push_back({row + 1, col - 1});
+        cells.push_back({row + 1, col});
+        cells.push_back({row + 1, col + 1});
+
+        // Middle
         cells.push_back({row, col - 1});
         cells.push_back({row, col + 1});
+
+        // Bottom
+        cells.push_back({row - 1, col - 1});
+        cells.push_back({row - 1, col});
+        cells.push_back({row - 1, col + 1});
 
         return cells;
     };

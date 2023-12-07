@@ -51,11 +51,14 @@ void part_one(const std::vector<std::string> &lines)
 
     auto sum = std::ranges::fold_left(get_numbers_by_symbols(engine), 0, std::plus());
 
-    std::cout << "Sum of game id is: " << sum << std::endl;
+    std::cout << "Sum of game id is: " << sum << '\n';
+    std::cout << '\n';
 }
 
 void part_two(const std::vector<std::string> &lines)
 {
     std::cout << "Part Two" << '\n';
     std::cout << "==========================" << '\n';
+
+    std::cout << '\n';
 }
