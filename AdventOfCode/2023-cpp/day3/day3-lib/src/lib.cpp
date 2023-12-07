@@ -28,8 +28,6 @@ std::vector<EngineToken> tokenize_engine_line(const std::string &engine_line)
         {
             return EngineToken{0, TokenType::SYMBOL};
         }
-
-        return EngineToken();
     };
 
     return engine_line | std::views::transform(tokenize) | std::ranges::to<std::vector>();

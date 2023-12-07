@@ -17,7 +17,7 @@ TEST_CASE("Test output")
     REQUIRE(true == true);
 }
 
-TEST_CASE("tokenize_engine_line, with number, returns correct token")
+TEST_CASE("tokenize_engine_line, with number, returns number token")
 {
     auto engine_line = "7";
 
@@ -27,11 +27,20 @@ TEST_CASE("tokenize_engine_line, with number, returns correct token")
     REQUIRE(result[0].value == 7);
 }
 
-TEST_CASE("tokenize_engine_line, with a period, returns correct token")
+TEST_CASE("tokenize_engine_line, with a period, returns period token")
 {
     auto engine_line = ".";
 
     auto result = tokenize_engine_line(engine_line);
 
     REQUIRE(result[0].type == TokenType::PERIOD);
+}
+
+TEST_CASE("tokenize_engine_line, with not a period or number, returns symbol token")
+{
+    auto engine_line = "*";
+
+    auto result = tokenize_engine_line(engine_line);
+
+    REQUIRE(result[0].type == TokenType::SYMBOL);
 }
