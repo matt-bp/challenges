@@ -15,6 +15,14 @@ using namespace aoc::day3;
 TEST_CASE("Test output")
 {
     REQUIRE(true == true);
+
+    // Check to see if they keys got ordered
+    std::map<int, int> e{{1, 100}, {2, 500}, {0, 12125}};
+
+    for (auto v : e)
+    {
+        std::cout << v.first << '\n';
+    }
 }
 
 TEST_CASE("tokenize_engine_line, with number, returns number token")

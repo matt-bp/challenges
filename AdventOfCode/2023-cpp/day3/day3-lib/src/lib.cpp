@@ -7,6 +7,7 @@
 #include <set>
 #include <sstream>
 #include <utility>
+#include <map>
 
 namespace aoc::day3
 {
@@ -52,20 +53,32 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
     // };
 
     auto construct_number_from_found_token = [&](int row, int col) {
-        int temp_row = row;
-        int temp_col = col;
 
+
+        // first, find all the numbers that are connected together
+        std::map<int, int> connected_numbers{};
+
+        // first go left
+        for (auto temp_col = col; is_valid_and_a_number(row, temp_col); temp_col--)
+        {
+            connected_numbers.insert({temp_col, engine[row][temp_col].value});
+        }
+
+        //// then right
+        //for (auto temp_col = col + 1; is_valid_and_a_number(row, temp_col); temp_col++)
+        //{
+        //    connected_numbers.insert(temp_col, engine[row][temp_col].value);
+        //}
+
+        // then, combine them into one number using the method below
         int multiplier = 1;
         int sum = 0;
 
-        while (is_valid_and_a_number(temp_row, temp_col))
+        for (auto v : connected_numbers)
         {
-            // already_used_cells.insert(std::make_pair(row, col));
-
-            sum += engine[temp_row][temp_col].value * multiplier;
+            sum += v.second * multiplier;
 
             multiplier *= 10;
-            temp_col -= 1;
         }
 
         return sum;
