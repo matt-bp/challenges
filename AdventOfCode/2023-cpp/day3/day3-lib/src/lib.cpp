@@ -2,12 +2,12 @@
 
 #include <cassert>
 #include <iostream>
+#include <map>
 #include <ranges>
 #include <regex>
 #include <set>
 #include <sstream>
 #include <utility>
-#include <map>
 
 namespace aoc::day3
 {
@@ -47,14 +47,21 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
         return engine[row][col].type & TokenType::NUMBER;
     };
 
+    auto create_cells_to_check = [](int row, int col) {
+        std::vector<std::pair<int, int>> cells;
+
+        cells.push_back({row, col - 1});
+        cells.push_back({row, col + 1});
+
+        return cells;
+    };
+
     // auto row_col_available = [&already_used_cells](int row, int col) {
     //     auto search = already_used_cells.find(std::make_pair(row, col));
     //     return search != already_used_cells.end();
     // };
 
     auto construct_number_from_found_token = [&](int row, int col) {
-
-
         // first, find all the numbers that are connected together
         std::map<int, int> connected_numbers{};
 
@@ -92,16 +99,12 @@ std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToke
         {
             if (engine[row][col].type & TokenType::SYMBOL)
             {
-                // Check left side
-                if (is_valid_and_a_number(row, col - 1))
+                for (const auto &cell : create_cells_to_check(row, col))
                 {
-                    numbers_found.push_back(construct_number_from_found_token(row, col - 1));
-                }
+                    if (!is_valid_and_a_number(cell.first, cell.second))
+                        continue;
 
-                // Check right side
-                if (is_valid_and_a_number(row, col + 1))
-                {
-                    numbers_found.push_back(construct_number_from_found_token(row, col + 1));
+                    numbers_found.push_back(construct_number_from_found_token(cell.first, cell.second));
                 }
             }
         }
