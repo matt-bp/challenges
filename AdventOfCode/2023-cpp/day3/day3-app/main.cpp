@@ -9,6 +9,7 @@
 #include <numeric>
 #include <ranges>
 #include <tuple>
+#include <utility>
 #include <vector>
 
 using namespace aoc::day3;
@@ -60,5 +61,17 @@ void part_two(const std::vector<std::string> &lines)
     std::cout << "Part Two" << '\n';
     std::cout << "==========================" << '\n';
 
+    // clang-format off
+    auto engine = lines 
+        | std::views::transform(tokenize_engine_line) 
+        | std::ranges::to<std::vector>();
+    // clang-format on
+
+    auto gear_ratios = get_numbers_by_gears(engine) | std::views::transform([](const std::vector<int> v) {
+                           return std::ranges::fold_left(v, 1, std::multiplies());
+                       });
+    auto sum_of_gear_ratios = std::ranges::fold_left(gear_ratios, 0, std::plus());
+
+    std::cout << "Sum of gear ratios is: " << sum_of_gear_ratios << '\n';
     std::cout << '\n';
 }

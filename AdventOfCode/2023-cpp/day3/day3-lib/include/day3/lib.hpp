@@ -11,7 +11,8 @@ enum TokenType
 {
     PERIOD = 0b0001,
     SYMBOL = 0b0010,
-    NUMBER = 0b0100
+    NUMBER = 0b0100,
+    ASTERISK = 0b1000
 };
 
 struct EngineToken
@@ -23,5 +24,5 @@ struct EngineToken
 std::vector<EngineToken> tokenize_engine_line(const std::string &engine_line);
 
 std::vector<int> get_numbers_by_symbols(const std::vector<std::vector<EngineToken>> &engine);
-
+std::vector<std::vector<int>> get_numbers_by_gears(const std::vector<std::vector<EngineToken>> &engine);
 } // namespace aoc::day3
