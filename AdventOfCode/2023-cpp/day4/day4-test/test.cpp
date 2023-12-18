@@ -1,0 +1,68 @@
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_predicate.hpp>
+#include <concepts>
+#include <cstdio>
+#include <day4/lib.hpp>
+#include <ranges>
+
+using namespace Catch;
+using namespace aoc::day4;
+
+#include <iostream>
+#include <string_view>
+
+// TEST_CASE("Test output")
+//{
+//     REQUIRE(true == true);
+//
+//     // Check to see if they keys got ordered
+//     std::map<int, int> e{{1, 100}, {2, 500}, {0, 12125}};
+//
+//     for (auto v : e)
+//     {
+//         std::cout << v.first << '\n';
+//     }
+//
+//     test();
+// }
+
+TEST_CASE("get_points", "[day4]")
+{
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+
+    SECTION("No winning numbers returns 0")
+    {
+        std::vector<int> winning_numbers = {};
+
+        auto result = get_points(numbers, winning_numbers);
+
+        REQUIRE(result == 0);
+    }
+
+    SECTION("One winning number returns 1")
+    {
+        std::vector<int> winning_numbers = {numbers[0]};
+
+        auto result = get_points(numbers, winning_numbers);
+
+        REQUIRE(result == 1);
+    }
+
+    SECTION("Two winning number returns 2")
+    {
+        std::vector<int> winning_numbers = {numbers[1], numbers[0]};
+
+        auto result = get_points(numbers, winning_numbers);
+
+        REQUIRE(result == 2);
+    }
+
+        SECTION("Four winning number returns 8")
+    {
+        std::vector<int> winning_numbers = {numbers[1], numbers[0], numbers[2], numbers[3]};
+
+        auto result = get_points(numbers, winning_numbers);
+
+        REQUIRE(result == 8);
+    }
+}
