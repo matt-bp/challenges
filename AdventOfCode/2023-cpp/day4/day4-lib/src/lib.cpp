@@ -20,20 +20,22 @@ void test()
 
 std::pair<std::vector<int>, std::vector<int>> get_numbers_and_winning_numbers(const std::string &s)
 {
-    std::regex numbers_group("Card \\d*: ((?:\\d+ )*)\\|((?: \\d+)*)");
+    std::regex numbers_group(R"(Card\s+\d*:\s+((?:\d+\s+)*)\|((?:\s+\d+)*))");
 
     auto next = std::sregex_iterator(s.begin(), s.end(), numbers_group);
     const auto end = std::sregex_iterator();
     std::string_view delim = " ";
 
     const auto to_string = [](const auto &sv) { return std::string(sv.begin(), sv.end()); };
+    const auto not_empty = [](const auto &str) { return str != ""; };
+    const auto to_int = [](const auto &str) { return std::stoi(str); };
 
     const auto get_nums_from_string = [&](const std::string &in_str) {
         // clang-format off
         return std::views::split(in_str, delim) 
             | std::views::transform(to_string)
-            | std::views::filter([](const auto &num_str){ return num_str != "";})
-            | std::views::transform([](const auto &num_str){ return std::stoi(num_str);})
+            | std::views::filter(not_empty)
+            | std::views::transform(to_int)
             | std::ranges::to<std::vector>();
         // clang-format on
     };
@@ -47,8 +49,8 @@ std::pair<std::vector<int>, std::vector<int>> get_numbers_and_winning_numbers(co
 
     assert(matches.size() == 3);
 
-    auto nums = get_nums_from_string(matches[1].str());
-    auto winning_nums = get_nums_from_string(matches[2].str());
+    auto winning_nums = get_nums_from_string(matches[1].str());
+    auto nums = get_nums_from_string(matches[2].str());
 
     return std::make_pair(nums, winning_nums);
 }

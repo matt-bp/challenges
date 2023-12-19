@@ -75,7 +75,7 @@ TEST_CASE("get_numbers_and_winning_numbers", "[day4]")
 
         auto result = get_numbers_and_winning_numbers(in);
 
-        REQUIRE(result.first.size() == 5);
-        REQUIRE(result.second.size() == 8);
+        REQUIRE(result.first.size() == 8);
+        REQUIRE(result.second.size() == 5);
     }
 }

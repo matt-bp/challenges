@@ -44,9 +44,6 @@ void part_one(const std::vector<std::string> &lines)
     std::cout << "Part One" << '\n';
     std::cout << "==========================" << '\n';
 
-    // For each line, get the numbers you have, and the winning numbers
-    auto get_pairs = [](const std::string &s) { return std::make_pair(std::vector<int>(), std::vector<int>()); };
-
     // clang-format off
     auto points = lines
         | std::views::transform(get_numbers_and_winning_numbers)
@@ -57,7 +54,7 @@ void part_one(const std::vector<std::string> &lines)
     // Add up all those points together
     const auto answer = std::accumulate(points.begin(), points.end(), 0);
 
-    std::cout << "Answer is: " << 0 << '\n';
+    std::cout << "Answer is: " << answer << '\n';
     std::cout << '\n';
 }
 
@@ -65,6 +62,7 @@ void part_two(const std::vector<std::string> &lines)
 {
     std::cout << "Part Two" << '\n';
     std::cout << "==========================" << '\n';
+    std::cout << lines[0] << '\n';
 
     std::cout << "Answer is: " << 0 << '\n';
     std::cout << '\n';
