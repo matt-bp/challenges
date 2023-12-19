@@ -47,16 +47,10 @@ void part_one(const std::vector<std::string> &lines)
     // For each line, get the numbers you have, and the winning numbers
     auto get_pairs = [](const std::string &s) { return std::make_pair(std::vector<int>(), std::vector<int>()); };
 
-    auto get_points = [](const std::pair<std::vector<int>, std::vector<int>> pairs) { return 0; };
-
-    // user view and translate to get all this to points
-
-    // For each pair of numbers and winning numbers, find how many points you have
-
     // clang-format off
     auto points = lines
-        | std::views::transform(get_pairs)
-        | std::views::transform(get_points)
+        | std::views::transform(get_numbers_and_winning_numbers)
+        | std::views::transform([](auto p){ return get_points(p.first, p.second);})
         | std::ranges::to<std::vector>();
     // clang-format on
 

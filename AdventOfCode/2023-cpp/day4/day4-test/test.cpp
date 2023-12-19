@@ -57,12 +57,25 @@ TEST_CASE("get_points", "[day4]")
         REQUIRE(result == 2);
     }
 
-        SECTION("Four winning number returns 8")
+    SECTION("Four winning number returns 8")
     {
         std::vector<int> winning_numbers = {numbers[1], numbers[0], numbers[2], numbers[3]};
 
         auto result = get_points(numbers, winning_numbers);
 
         REQUIRE(result == 8);
+    }
+}
+
+TEST_CASE("get_numbers_and_winning_numbers", "[day4]")
+{
+    SECTION("Example from input, returns the two lists")
+    {
+        auto in = "Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11";
+
+        auto result = get_numbers_and_winning_numbers(in);
+
+        REQUIRE(result.first.size() == 5);
+        REQUIRE(result.second.size() == 8);
     }
 }
