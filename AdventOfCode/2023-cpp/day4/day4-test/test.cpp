@@ -26,7 +26,7 @@ using namespace aoc::day4;
 //     test();
 // }
 
-TEST_CASE("get_points", "[day4]")
+TEST_CASE("get_number_winning_numbers", "[day4]")
 {
     std::vector<int> numbers = {1, 2, 3, 4, 5};
 
@@ -34,7 +34,7 @@ TEST_CASE("get_points", "[day4]")
     {
         std::vector<int> winning_numbers = {};
 
-        auto result = get_points(numbers, winning_numbers);
+        auto result = get_number_winning_numbers(numbers, winning_numbers);
 
         REQUIRE(result == 0);
     }
@@ -43,7 +43,7 @@ TEST_CASE("get_points", "[day4]")
     {
         std::vector<int> winning_numbers = {numbers[0]};
 
-        auto result = get_points(numbers, winning_numbers);
+        auto result = get_number_winning_numbers(numbers, winning_numbers);
 
         REQUIRE(result == 1);
     }
@@ -52,18 +52,18 @@ TEST_CASE("get_points", "[day4]")
     {
         std::vector<int> winning_numbers = {numbers[1], numbers[0]};
 
-        auto result = get_points(numbers, winning_numbers);
+        auto result = get_number_winning_numbers(numbers, winning_numbers);
 
         REQUIRE(result == 2);
     }
 
-    SECTION("Four winning number returns 8")
+    SECTION("Four winning number returns 4")
     {
         std::vector<int> winning_numbers = {numbers[1], numbers[0], numbers[2], numbers[3]};
 
-        auto result = get_points(numbers, winning_numbers);
+        auto result = get_number_winning_numbers(numbers, winning_numbers);
 
-        REQUIRE(result == 8);
+        REQUIRE(result == 4);
     }
 }
 

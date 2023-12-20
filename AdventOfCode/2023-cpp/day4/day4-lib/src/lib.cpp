@@ -55,7 +55,7 @@ std::pair<std::vector<int>, std::vector<int>> get_numbers_and_winning_numbers(co
     return std::make_pair(nums, winning_nums);
 }
 
-int get_points(std::vector<int> numbers, std::vector<int> winning_numbers)
+int get_number_of_matches(std::vector<int> numbers, std::vector<int> winning_numbers)
 {
     std::ranges::sort(numbers);
     std::ranges::sort(winning_numbers);
@@ -64,10 +64,7 @@ int get_points(std::vector<int> numbers, std::vector<int> winning_numbers)
 
     std::ranges::set_intersection(numbers, winning_numbers, std::back_inserter(out));
 
-    if (out.size() == 0)
-        return 0;
-
-    return std::pow(2, out.size() - 1);
+    return out.size();
 }
 
 } // namespace aoc::day4

@@ -47,7 +47,9 @@ void part_one(const std::vector<std::string> &lines)
     // clang-format off
     auto points = lines
         | std::views::transform(get_numbers_and_winning_numbers)
-        | std::views::transform([](auto p){ return get_points(p.first, p.second);})
+        | std::views::transform([](auto p){ return get_number_of_matches(p.first, p.second);})
+        | std::views::filter([](auto num_winning){ return num_winning != 0;})
+        | std::views::transform([](const auto &num_winning){ return num_winning == 0 ? 0 : (int)std::pow(2, num_winning - 1); })
         | std::ranges::to<std::vector>();
     // clang-format on
 
@@ -62,7 +64,23 @@ void part_two(const std::vector<std::string> &lines)
 {
     std::cout << "Part Two" << '\n';
     std::cout << "==========================" << '\n';
-    std::cout << lines[0] << '\n';
+
+    // clang-format off
+    auto points = lines
+        | std::views::transform(get_numbers_and_winning_numbers)
+        | std::views::transform([](auto p){ return get_number_of_matches(p.first, p.second);})
+        | std::ranges::to<std::vector>();
+    // clang-format on
+
+    std::vector<int> counts(points.size(), -1);
+
+    for (auto const [index, point] : std::views::enumerate(points))
+    {
+        for (auto j = index + 1; j < index + point; j++)
+        {
+            counts[j] += counts[index];
+        }
+    }
 
     std::cout << "Answer is: " << 0 << '\n';
     std::cout << '\n';
