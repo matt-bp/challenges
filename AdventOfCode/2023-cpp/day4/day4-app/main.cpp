@@ -66,22 +66,24 @@ void part_two(const std::vector<std::string> &lines)
     std::cout << "==========================" << '\n';
 
     // clang-format off
-    auto points = lines
+    auto number_of_matches = lines
         | std::views::transform(get_numbers_and_winning_numbers)
         | std::views::transform([](auto p){ return get_number_of_matches(p.first, p.second);})
         | std::ranges::to<std::vector>();
     // clang-format on
 
-    std::vector<int> counts(points.size(), -1);
+    std::vector<int> counts(number_of_matches.size(), 1);
 
-    for (auto const [index, point] : std::views::enumerate(points))
+    for (auto const [index, match_count] : std::views::enumerate(number_of_matches))
     {
-        for (auto j = index + 1; j < index + point; j++)
+        for (auto j = index + 1; j <= index + match_count; j++)
         {
             counts[j] += counts[index];
         }
     }
 
-    std::cout << "Answer is: " << 0 << '\n';
+    auto total_scratchcards = std::ranges::fold_left(counts, 0, std::plus());
+
+    std::cout << "Answer is: " << total_scratchcards << '\n';
     std::cout << '\n';
 }
